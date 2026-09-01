@@ -1,0 +1,91 @@
+//1. Crie um tipo estruturado para armazenar dados de um funcionário. Uma estrutura deste tipo possui
+//os seguintes campos: nome, salário, identificador e cargo.
+
+//a. Escreva uma função que receba como parâmetro o endereço de uma estrturua do tipo Funcionario
+//e preencha seus campos com valores fornecidos pelo usuário via teclado.
+
+//b. Escreva a função que receba como parâmetro o endereço de uma estrutura do tipo Funcionario
+//e imprima os valores dos seus campos.
+
+//c. Implemente uma função para realizar uma alteração no salário de uma estrutura do tipo Funcionario.
+
+//d. Escreva uma função que receba como parâmetro um vetor de estruturas do tipo Funcionario e
+//imprima o cargo e salário do Funcionario com maior salário e o cargo e salário do funcionário
+//com o menor salário.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    char nome[50];
+    float salario;
+    int identificador;
+    char cargo[50];
+} Assalariado;
+
+void Funcionario(Assalariado *p){
+    printf("\n--- Digite os dados do Funcionario ---\n");
+    printf("Insira seu nome: ");
+    scanf(" %[^\n]", p->nome);
+
+    printf("Insira seu salario: ");
+    scanf("%f", &p->salario);
+
+    printf("Insira seu identificador: ");
+    scanf("%d", &p->identificador);
+
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+    printf("Insira seu cargo: ");
+    scanf(" %[^\n]", p->cargo);
+}
+
+void imprimirDados(Assalariado p){
+    printf("\n=== Dados do Funcionário ===\n");
+    printf("Nome: %s\n", p.nome);
+    printf("Salário: %.2f reais\n", p.salario);
+    printf("Identificador: %d\n", p.identificador);
+    printf("Cargo: %s\n", p.cargo);
+}
+
+void alteracaoSalario(Assalariado *func, float valor){
+    func->salario += valor;
+    printf("\nSeu novo salario é: %.2f reais", func->salario);
+}
+
+void maiorMenorSalario(Assalariado *func, int tam){
+    int i, maior = 0, menor = 0;
+    for (i = 0;i < tam; i++){
+        if (func[i].salario > func[maior].salario){
+            maior = i;
+        }
+        if (func[i].salario < func[menor].salario){
+            menor = i;
+        }
+    }
+    printf("\nFuncionario com maior salario: %s,\nFuncionario com menos salario: %s", func[maior].cargo, func[menor].cargo);
+}
+
+int main(){
+    int i, n;
+
+    printf("Quantos funcionários deseja cadastrar?: ");
+    scanf("%d",&n);
+
+    Assalariado func[n];
+
+    for(i=0;i<n;i++){
+        Funcionario(&func[i]);
+    }
+    for(i=0;i<n;i++){
+        imprimirDados(func[i]);
+    }
+
+    if(n>0){
+        alteracaoSalario(&func[0], 2000);
+    }
+
+    maiorMenorSalario(func, n);
+    return 0;
+}
