@@ -1,0 +1,45 @@
+//1. Faça um programa e que manipula dados de alunos. Os alunos são representados com structs com os capos:
+//nome, idade e desempenho acadêmico. O desempenho deve ser representado como uma união: IRA, IEA e IG.
+
+#include <stdio.h>
+
+typedef union{
+    char IRA[20];
+    char IEA[20];
+    char IG[20];
+} Desempenho;
+
+typedef struct{
+    char nome[20];
+    int idade;
+    Desempenho doc;
+} Aluno;
+
+int main(){
+    Aluno p;
+    int d;
+
+    printf("Insira o nome: ");
+    scanf(" %[^\n]", p.nome);
+
+    printf("Insira a idade: ");
+    scanf("%d", &p.idade);
+
+    printf("Digite 1-IRA ou 2-IEA ou 3-IG: ");
+    scanf("%d", &d);
+
+    if(d==1){
+        printf("Insira seu IRA: ");
+        scanf(" %[^\n]", p.doc.IRA);
+    } else if(d==2){
+        printf("Insira seu IEA: ");
+        scanf(" %[^\n]", p.doc.IRA);
+    } else if(d==3){
+        printf("Insira seu IG: ");
+        scanf(" %[^\n]", p.doc.IG);
+    } else {
+        printf("Opção inválida!");
+    }
+
+    return 0;
+}
