@@ -1,0 +1,76 @@
+q2-d
+//2. Crie um tipo estruturado para armazenar dados de uma pessoa. Uma estrutura deste tipo possui os
+//seguintes campos: nome da pessoa, numero do documento e idade.
+
+//d) Escreva uma função que receba como parâmetro um vetor de estruturas do tipo Pessoa
+//e imprima o nome da Pessoa mais velha e mais nova.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    char nome[50];
+    char numero_documento[20];
+    int idade;
+} Pessoa;
+
+void preencherDados(Pessoa *p){
+    printf("\n==== Insira seus Dados ====\n");
+
+    printf("Insira seu nome: ");
+    scanf(" %[^\n]", p->nome);
+
+    printf("Insira seu numero de documento (CPF): ");
+    scanf(" %[^\n]", p->numero_documento);
+
+    printf("Insira sua idade: ");
+    scanf("%d", &p->idade);
+}
+
+void imprimirDados(Pessoa p){
+    printf("\n==== Seus Dados ====\n");
+    printf("Seu nome: %s.\n", p.nome);
+    printf("Seu numero de documento (CPF): %s.\n", p.numero_documento);
+    printf("Sua idade: %d.\n", p.idade);
+}
+
+void alteracaoIdade(Pessoa *i, int nova_idade){ 
+    i->idade = nova_idade; 
+    printf("Sua nova idade é: %d\n", i->idade); 
+}
+
+void maiorMenorIdade(Pessoa *id, int tam){
+    int i, maior = 0, menor = 0;
+    for(i=0;i<tam;i++){
+        if(id[i].idade > id[maior].idade){
+            maior = i;
+        }
+        if(id[i].idade < id[menor].idade){
+            menor = i;
+        }
+    }
+    printf("\nPessoa com maior idade: %s,\nPessoa com menor idade: %s", id[maior].nome, id[menor].nome);
+}
+
+int main(){
+    int i, n;
+
+    printf("Quantas pessoas deseja cadastrar?: ");
+    scanf("%d",&n);
+
+    Pessoa func[n];
+
+    for(i=0;i<n;i++){
+        preencherDados(&func[i]);
+    }
+    for(i=0;i<n;i++){
+        imprimirDados(func[i]);
+    }
+
+    if(n>0){
+        alteracaoIdade(&func[0], 25);
+    }
+
+    maiorMenorIdade(func, n);
+    return 0;
+}
